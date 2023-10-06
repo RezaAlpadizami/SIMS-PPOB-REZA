@@ -1,6 +1,6 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 type FormInputProps = {
   login?: boolean;
@@ -9,7 +9,12 @@ type FormInputProps = {
 };
 
 const FormInput: React.FC<FormInputProps> = ({ login, desc, account }) => {
-  const onFinish = (values: any) => {
+  const navigate = useNavigate();
+
+  const onFinishLogin = (values: any) => {
+    navigate("/");
+  };
+  const onFinishRegister = (values: any) => {
     console.log("Received values of form: ", values);
   };
   return (
@@ -28,7 +33,7 @@ const FormInput: React.FC<FormInputProps> = ({ login, desc, account }) => {
               name="login-field"
               className="w-[385px]"
               initialValues={{ remember: true }}
-              onFinish={onFinish}
+              onFinish={onFinishLogin}
             >
               <Form.Item
                 name="email"
@@ -86,7 +91,7 @@ const FormInput: React.FC<FormInputProps> = ({ login, desc, account }) => {
               name="register-field"
               className="w-[385px]"
               initialValues={{ remember: true }}
-              onFinish={onFinish}
+              onFinish={onFinishRegister}
             >
               <Form.Item
                 name="email"
@@ -151,7 +156,7 @@ const FormInput: React.FC<FormInputProps> = ({ login, desc, account }) => {
               name="register-field"
               className="w-[385px]"
               initialValues={{ remember: true }}
-              onFinish={onFinish}
+              onFinish={onFinishRegister}
             >
               <Form.Item
                 name="email"
