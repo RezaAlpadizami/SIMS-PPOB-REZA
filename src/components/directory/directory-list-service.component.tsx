@@ -1,5 +1,5 @@
 import React from "react";
-import CategoriesItem from "../categories-item/categories-item.component";
+import CategoriesService from "../categories-service/categories-service.component";
 
 interface IItems {
   id: number;
@@ -11,14 +11,14 @@ interface DirectoryItemsProps {
   items: IItems[];
 }
 
-const DirectoryItem: React.FC<DirectoryItemsProps> = ({ items }) => {
+const DirectoryListService: React.FC<DirectoryItemsProps> = ({ items }) => {
   return (
     <div className="flex gap-16 my-8">
       {items.map((item) => (
-        <CategoriesItem key={item.id} {...item} />
+        <CategoriesService key={item.id} {...item} />
       ))}
     </div>
   );
 };
 
-export default DirectoryItem;
+export default DirectoryListService;

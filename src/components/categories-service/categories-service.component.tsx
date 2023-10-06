@@ -3,7 +3,7 @@ type TItem = {
   title: String;
 };
 
-const CategoriesItem = (item: TItem) => {
+const CategoriesService = (item: TItem) => {
   const { imgUrl, title } = item;
   return (
     <div className="w-full flex justify-around">
@@ -15,4 +15,4 @@ const CategoriesItem = (item: TItem) => {
   );
 };
 
-export default CategoriesItem;
+export default CategoriesService;

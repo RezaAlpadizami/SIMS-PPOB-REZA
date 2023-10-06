@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* .ant-btn:not([disabled]):hover {
+  background:#ee6262 !important;
+} */
+
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }

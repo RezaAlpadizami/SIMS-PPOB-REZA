@@ -5,9 +5,10 @@ import { Link } from "react-router-dom";
 type FormInputProps = {
   login?: boolean;
   desc: String;
+  account?: boolean;
 };
 
-const FormInput: React.FC<FormInputProps> = ({ login, desc }) => {
+const FormInput: React.FC<FormInputProps> = ({ login, desc, account }) => {
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
   };
@@ -24,7 +25,7 @@ const FormInput: React.FC<FormInputProps> = ({ login, desc }) => {
         <div className="flex justify-center">
           {login ? (
             <Form
-              name="normal_login"
+              name="login-field"
               className="w-[385px]"
               initialValues={{ remember: true }}
               onFinish={onFinish}
@@ -50,6 +51,10 @@ const FormInput: React.FC<FormInputProps> = ({ login, desc }) => {
                 dependencies={["password"]}
                 rules={[
                   { required: true, message: "Please input your Password!" },
+                  {
+                    min: 8,
+                    message: "Password must be at least 8 characters long.",
+                  },
                 ]}
                 hasFeedback
               >
@@ -76,9 +81,74 @@ const FormInput: React.FC<FormInputProps> = ({ login, desc }) => {
                 </Link>
               </span>
             </Form>
+          ) : account ? (
+            <Form
+              name="register-field"
+              className="w-[385px]"
+              initialValues={{ remember: true }}
+              onFinish={onFinish}
+            >
+              <Form.Item
+                name="email"
+                rules={[
+                  {
+                    type: "email",
+                    message: "The input is not valid E-mail!",
+                  },
+                  { required: true, message: "Please input your email!" },
+                ]}
+              >
+                <Input
+                  prefix={"@"}
+                  className="text-gray-300 h-12 "
+                  placeholder="masukan email anda"
+                />
+              </Form.Item>
+              <Form.Item
+                name="firstname"
+                rules={[
+                  { required: true, message: "Please input your firstname!" },
+                ]}
+              >
+                <Input
+                  prefix={
+                    <UserOutlined className="text-gray-300 h-10 w-full" />
+                  }
+                  placeholder="nama depan"
+                />
+              </Form.Item>
+              <Form.Item
+                name="lastname"
+                rules={[
+                  { required: true, message: "Please input your Lastname!" },
+                ]}
+              >
+                <Input
+                  prefix={
+                    <UserOutlined className="text-gray-300 h-10 w-full" />
+                  }
+                  placeholder="nama belakang"
+                />
+              </Form.Item>
+              <Form.Item className="my-10">
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  className="w-full bg-red-600 rounded-sm"
+                >
+                  Simpan
+                </Button>
+              </Form.Item>
+              <span className="flex justify-center">
+                sudah punya akun? login
+                <Link to="/login" className="mx-1 text-red-600">
+                  di sini!
+                </Link>
+              </span>
+            </Form>
           ) : (
             <Form
-              name="normal_login"
+              name="register-field"
               className="w-[385px]"
               initialValues={{ remember: true }}
               onFinish={onFinish}
@@ -130,6 +200,10 @@ const FormInput: React.FC<FormInputProps> = ({ login, desc }) => {
                 dependencies={["password"]}
                 rules={[
                   { required: true, message: "Please input your Password!" },
+                  {
+                    min: 8,
+                    message: "Password must be at least 8 characters long.",
+                  },
                 ]}
                 hasFeedback
               >

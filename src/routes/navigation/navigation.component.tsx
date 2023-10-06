@@ -1,8 +1,15 @@
 import { Fragment, useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
+import AccountBalance from "../../components/account-balance/account-balance.component";
 
 const Navigation = () => {
   const [navbar, setNavbar] = useState(false);
+  const location = useLocation();
+
+  const isAccountPage =
+    location.pathname === "/account" ||
+    location.pathname === "/account/edit-profile";
+
   return (
     <Fragment>
       <nav className="w-full bg-white my-4 border-b">
@@ -61,20 +68,21 @@ const Navigation = () => {
               }`}
             >
               <ul className="items-center justify-center space-y-8 md:flex md:space-x-20 md:space-y-0 font-semibold">
-                <li className="text-gray-600 hover:text-blue-600">
-                  <Link to="/">Top Up</Link>
+                <li className="text-gray-600 hover:text-red-600">
+                  <Link to="/topup">Top Up</Link>
                 </li>
-                <li className="text-gray-600 hover:text-blue-600">
-                  <Link to="/">Transaction</Link>
+                <li className="text-gray-600 hover:text-red-600">
+                  <Link to="/payment">Transaction</Link>
                 </li>
-                <li className="text-gray-600 hover:text-blue-600">
-                  <Link to="/">Akun</Link>
+                <li className="text-gray-600 hover:text-red-600">
+                  <Link to="/account">Akun</Link>
                 </li>
               </ul>
             </div>
           </div>
         </div>
       </nav>
+      {!isAccountPage && <AccountBalance />}
       <Outlet />
     </Fragment>
   );
