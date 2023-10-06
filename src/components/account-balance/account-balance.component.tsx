@@ -1,7 +1,7 @@
 import { useState } from "react";
 import imgProfile from "../../assets/img/img-profile.png";
 
-const AccountBalance = () => {
+const AccountBalance: React.FC = () => {
   const [isShowBalance, setShowBalance] = useState(false);
 
   const balance = "127.500";

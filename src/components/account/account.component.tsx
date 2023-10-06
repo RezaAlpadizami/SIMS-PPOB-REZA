@@ -7,13 +7,13 @@ const Account: React.FC = () => {
   const navigate = useNavigate();
 
   const handleEditProfileClick = () => {
-    navigate("/account/edit-profile");
+    navigate("/edit-profile");
   };
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
   };
   return (
-    <div className="">
+    <>
       <div className="grid place-items-center min-h-[500px]">
         <div className="flex flex-col gap-2 my-6 items-center">
           <div className="relative">
@@ -80,7 +80,7 @@ const Account: React.FC = () => {
           </Form>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

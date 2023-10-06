@@ -7,8 +7,7 @@ const Navigation = () => {
   const location = useLocation();
 
   const isAccountPage =
-    location.pathname === "/account" ||
-    location.pathname === "/account/edit-profile";
+    location.pathname === "/account" || location.pathname === "/edit-profile";
 
   return (
     <Fragment>

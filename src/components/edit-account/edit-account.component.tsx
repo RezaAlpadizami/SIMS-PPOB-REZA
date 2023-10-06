@@ -2,7 +2,7 @@ import { Button, Form, Input } from "antd";
 import { UserOutlined, EditFilled } from "@ant-design/icons";
 import ImageUpload from "../image-upload/image-upload.component";
 
-const EditAccount = () => {
+const EditAccount: React.FC = () => {
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
   };

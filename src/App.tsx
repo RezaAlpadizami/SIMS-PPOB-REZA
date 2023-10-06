@@ -18,9 +18,8 @@ const App = () => {
         <Route path="topup" element={<TopUp />} />
         <Route path="payment" element={<Payment />} />
         <Route path="history" element={<HistoryTransaction />} />
-        <Route path="account" element={<Account />}>
-          <Route path="edit-profile" element={<EditAccount />} />
-        </Route>
+        <Route path="account" element={<Account />} />
+        <Route path="edit-profile" element={<EditAccount />} />
       </Route>
       <Route path="/login" element={<Login />} />
       <Route path="/signup" element={<Register />} />
