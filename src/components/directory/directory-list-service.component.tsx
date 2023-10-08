@@ -2,9 +2,10 @@ import React from "react";
 import CategoriesService from "../categories-service/categories-service.component";
 
 interface IItems {
-  id: number;
-  imgUrl: String;
-  title: String;
+  service_code: number;
+  service_icon: String;
+  service_name: string;
+  service_tariff: number;
 }
 
 interface DirectoryItemsProps {
@@ -15,7 +16,7 @@ const DirectoryListService: React.FC<DirectoryItemsProps> = ({ items }) => {
   return (
     <div className="flex gap-16 my-8">
       {items.map((item) => (
-        <CategoriesService key={item.id} {...item} />
+        <CategoriesService key={item.service_code} {...item} />
       ))}
     </div>
   );

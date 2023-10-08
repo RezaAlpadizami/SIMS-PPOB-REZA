@@ -2,8 +2,9 @@ import React from "react";
 import ListBanner from "../list-banner/list-banner.component";
 
 type IBanner = {
-  id: number;
-  imgUrl: String;
+  banner_name: string;
+  banner_image: string;
+  description: string;
 };
 
 interface ListBannerProps {
@@ -16,7 +17,7 @@ const DirectoryListBanner: React.FC<ListBannerProps> = ({ listBanner }) => {
       <h3 className="font-bold my-4">Temukan promo menarik</h3>
       <div className="flex gap-2 overflow-y-auto no-scrollbar">
         {listBanner.map((banner) => (
-          <div key={banner.id} className="min-w-[25%]">
+          <div key={banner.banner_name} className="min-w-[25%]">
             <ListBanner {...banner} />
           </div>
         ))}

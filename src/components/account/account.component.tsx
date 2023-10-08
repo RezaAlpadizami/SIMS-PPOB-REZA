@@ -2,9 +2,31 @@ import { Button, Form, Input } from "antd";
 import { UserOutlined, EditFilled } from "@ant-design/icons";
 import ImageUpload from "../image-upload/image-upload.component";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logut, reset } from "../../features/auth/authSlice";
+import { AppDispatch } from "../../app/store";
 
+// interface UserData {
+//   status: number;
+//   message: string;
+//   data: null;
+// }
+// interface AuthState {
+//   user: UserData | null;
+//   isError: boolean;
+//   isSuccess: boolean;
+//   isLoading: boolean;
+//   message: string;
+// }
 const Account: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch<AppDispatch>();
+
+  const onLogut = () => {
+    dispatch(logut());
+    dispatch(reset());
+    navigate("/login");
+  };
 
   const handleEditProfileClick = () => {
     navigate("/edit-profile");
@@ -62,7 +84,7 @@ const Account: React.FC = () => {
               <Button
                 type="primary"
                 htmlType="submit"
-                className="w-full bg-red-600 rounded-sm"
+                className="w-full text-white bg-red-500"
                 onClick={handleEditProfileClick}
               >
                 Edit Profile
@@ -72,7 +94,8 @@ const Account: React.FC = () => {
               <Button
                 type="primary"
                 htmlType="submit"
-                className="w-full border border-red-600 rounded-sm text-red-600"
+                className="w-full text-white bg-red-500"
+                onClick={onLogut}
               >
                 Logut
               </Button>

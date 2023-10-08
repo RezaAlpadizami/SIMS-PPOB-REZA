@@ -1,22 +1,29 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 type FormInputProps = {
   login?: boolean;
   desc: String;
   account?: boolean;
+  onFinish?: (values: any) => void;
 };
 
-const FormInput: React.FC<FormInputProps> = ({ login, desc, account }) => {
-  const navigate = useNavigate();
+const FormInput: React.FC<FormInputProps> = ({
+  login,
+  desc,
+  account,
+  onFinish,
+}) => {
+  // const navigate = useNavigate();
 
-  const onFinishLogin = (values: any) => {
-    navigate("/");
-  };
-  const onFinishRegister = (values: any) => {
-    console.log("Received values of form: ", values);
-  };
+  // const onFinishLogin = (values: any) => {
+  //   console.log(values);
+  //   navigate("/");
+  // };
+  // const onFinishRegister = (values: any) => {
+  //   console.log("Received values of form: ", values);
+  // };
   return (
     <div className="grid grid-cols-2 min-h-[100vh]">
       <div className="w-[50%] flex flex-col justify-center container mx-auto">
@@ -33,7 +40,7 @@ const FormInput: React.FC<FormInputProps> = ({ login, desc, account }) => {
               name="login-field"
               className="w-[385px]"
               initialValues={{ remember: true }}
-              onFinish={onFinishLogin}
+              onFinish={onFinish}
             >
               <Form.Item
                 name="email"
@@ -91,7 +98,7 @@ const FormInput: React.FC<FormInputProps> = ({ login, desc, account }) => {
               name="register-field"
               className="w-[385px]"
               initialValues={{ remember: true }}
-              onFinish={onFinishRegister}
+              onFinish={onFinish}
             >
               <Form.Item
                 name="email"
@@ -156,7 +163,7 @@ const FormInput: React.FC<FormInputProps> = ({ login, desc, account }) => {
               name="register-field"
               className="w-[385px]"
               initialValues={{ remember: true }}
-              onFinish={onFinishRegister}
+              onFinish={onFinish}
             >
               <Form.Item
                 name="email"
@@ -175,7 +182,7 @@ const FormInput: React.FC<FormInputProps> = ({ login, desc, account }) => {
                 />
               </Form.Item>
               <Form.Item
-                name="firstname"
+                name="first_name"
                 rules={[
                   { required: true, message: "Please input your firstname!" },
                 ]}
@@ -188,7 +195,7 @@ const FormInput: React.FC<FormInputProps> = ({ login, desc, account }) => {
                 />
               </Form.Item>
               <Form.Item
-                name="lastname"
+                name="last_name"
                 rules={[
                   { required: true, message: "Please input your Lastname!" },
                 ]}
@@ -220,7 +227,7 @@ const FormInput: React.FC<FormInputProps> = ({ login, desc, account }) => {
                 />
               </Form.Item>
               <Form.Item
-                name="confirm"
+                name="confirm_password"
                 dependencies={["password"]}
                 className="text-right"
                 rules={[

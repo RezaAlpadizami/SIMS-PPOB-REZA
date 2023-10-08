@@ -1,12 +1,12 @@
 type IBanner = {
-  imgUrl: String;
+  banner_image: String;
 };
 
 const ListBanner = (banner: IBanner) => {
   return (
     <div className="cursor-pointer">
       <img
-        src={require(`../../assets/banner/${banner.imgUrl}`)}
+        src={`${banner.banner_image}`}
         alt="banner.png"
         className="w-[90%]"
       />
