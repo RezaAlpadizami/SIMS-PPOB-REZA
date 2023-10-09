@@ -1,17 +1,14 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import profileService from "./profileService";
+import balanceService from "./balanceService";
 
-type Profile = {
+type Balance = {
   data: {
-    email: string;
-    first_name: string;
-    last_name: string;
-    profile_image: string;
+    balance: number;
   };
 };
 
 type InitialState = {
-  profile: Profile | null;
+  balance: Balance | null;
   isError: boolean;
   isSuccess: boolean;
   isLoading: boolean;
@@ -19,14 +16,14 @@ type InitialState = {
 };
 
 const initialState: InitialState = {
-  profile: null,
+  balance: null,
   isError: false,
   isSuccess: false,
   isLoading: false,
   message: "",
 };
 
-export const getProfile = createAsyncThunk(
+export const getBalance = createAsyncThunk(
   "profile/fetchProfile",
   async (_, thunkAPI) => {
     try {
@@ -37,7 +34,7 @@ export const getProfile = createAsyncThunk(
         throw new Error("Token not found");
       }
 
-      return await profileService.getProfile(token);
+      return await balanceService.getBalance(token);
     } catch (error: any) {
       const message =
         (error.response &&
@@ -50,7 +47,7 @@ export const getProfile = createAsyncThunk(
   }
 );
 
-export const profileSlice = createSlice({
+export const balanceSlice = createSlice({
   name: "profile",
   initialState,
   reducers: {
@@ -63,18 +60,18 @@ export const profileSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getProfile.pending, (state) => {
+      .addCase(getBalance.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(
-        getProfile.fulfilled,
-        (state, action: PayloadAction<Profile>) => {
+        getBalance.fulfilled,
+        (state, action: PayloadAction<Balance>) => {
           state.isLoading = false;
           state.isSuccess = true;
-          state.profile = action.payload;
+          state.balance = action.payload;
         }
       )
-      .addCase(getProfile.rejected, (state, action) => {
+      .addCase(getBalance.rejected, (state, action) => {
         state.isLoading = false;
         state.isError = true;
         state.message = action.payload as string;
@@ -82,5 +79,5 @@ export const profileSlice = createSlice({
   },
 });
 
-export const { reset } = profileSlice.actions;
-export default profileSlice.reducer;
+export const { reset } = balanceSlice.actions;
+export default balanceSlice.reducer;

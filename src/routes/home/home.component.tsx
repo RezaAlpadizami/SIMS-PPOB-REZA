@@ -1,38 +1,26 @@
-import DirectoryListService from "../../components/directory/directory-list-service.component";
-import DirectoryListBanner from "../../components/directory/directory-list-banner.component";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import axios from "axios";
-import LoadingLottie from "../../components/spinner-lottie/spinner-lottie.component";
 
-interface UserData {
-  status: number;
-  message: string;
-  data: null;
-}
-interface AuthState {
-  user: UserData | null;
-  isError: boolean;
-  isSuccess: boolean;
-  isLoading: boolean;
-  message: string;
-}
-interface RootState {
-  auth: AuthState;
-}
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import authService from "../../features/auth/authSerive";
+
+import { useAppSelector } from "../../app/hooks";
+import LoadingLottie from "../../components/spinner-lottie/spinner-lottie.component";
+import DirectoryListBanner from "../../components/directory/directory-list-banner.component";
+import DirectoryListService from "../../components/directory/directory-list-service.component";
 
 const API_URL = "https://take-home-test-api.nutech-integrasi.app";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
-  const { user } = useSelector((state: RootState) => state.auth);
+  const { user } = useAppSelector((state) => state.auth);
+
+  const [isLoading, setIsLoading] = useState(false);
   const [dataBanner, setDataBanner] = useState<any[]>([]);
   const [dataService, setDataService] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (!user) {
+    if (!user || authService.isSessionExpired()) {
       navigate("/login");
     }
   }, [user, navigate]);
@@ -40,18 +28,16 @@ const Home: React.FC = () => {
   useEffect(() => {
     getAllBanner();
     getAllService();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getAllBanner = async () => {
     setIsLoading(true);
-    const tokenString = localStorage.getItem("user");
-    const tokenObject = tokenString ? JSON.parse(tokenString) : null;
-    const token = tokenObject?.data?.token;
-
+    const token = user?.data.token;
     const headers = {
       Authorization: `Bearer ${token}`,
     };
-
     try {
       const response = await axios.get(`${API_URL}/banner`, {
         headers,
@@ -66,14 +52,10 @@ const Home: React.FC = () => {
 
   const getAllService = async () => {
     setIsLoading(true);
-    const tokenString = localStorage.getItem("user");
-    const tokenObject = tokenString ? JSON.parse(tokenString) : null;
-    const token = tokenObject?.data?.token;
-
+    const token = user?.data.token;
     const headers = {
       Authorization: `Bearer ${token}`,
     };
-
     try {
       const response = await axios.get(`${API_URL}/services`, {
         headers,

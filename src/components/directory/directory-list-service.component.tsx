@@ -2,8 +2,8 @@ import React from "react";
 import CategoriesService from "../categories-service/categories-service.component";
 
 interface IItems {
-  service_code: number;
-  service_icon: String;
+  service_code: string;
+  service_icon: string;
   service_name: string;
   service_tariff: number;
 }

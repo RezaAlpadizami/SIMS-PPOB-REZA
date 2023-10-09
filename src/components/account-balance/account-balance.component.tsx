@@ -1,21 +1,21 @@
 import { useEffect, useState } from "react";
 import imgProfile from "../../assets/img/img-profile.png";
-import axios from "axios";
 import { thousandSeparator } from "../../utils/helper";
 import { getProfile, reset } from "../../features/profile/profileSlice";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
-
-const API_URL = "https://take-home-test-api.nutech-integrasi.app";
+import {
+  getBalance,
+  reset as resetBalance,
+} from "../../features/balance-account/balanceSlice";
 
 const AccountBalance: React.FC = () => {
-  const [isBalance, setIsBalance] = useState(0);
   const [isShowBalance, setShowBalance] = useState(false);
-  const { isError, profile, message } = useAppSelector(
-    (state) => state.profile
-  );
+
+  const { profile } = useAppSelector((state) => state.profile);
+  const { balance } = useAppSelector((state) => state.balance);
   const dispatch = useAppDispatch();
 
-  const firstName = profile?.data.first_name || ""; // Ensure it's a string, handle possible null values
+  const firstName = profile?.data.first_name || "";
   const lastName = profile?.data.last_name || "";
 
   const capitalizedFirstName =
@@ -24,39 +24,20 @@ const AccountBalance: React.FC = () => {
     lastName.charAt(0).toUpperCase() + lastName.slice(1).toLowerCase();
 
   useEffect(() => {
-    if (isError) {
-      console.log(message);
-    }
-
     dispatch(getProfile());
 
     return () => {
       dispatch(reset());
     };
-  }, [isError, message, dispatch]);
-
-  useEffect(() => {
-    fetchAccountBalance();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const fetchAccountBalance = async () => {
-    const tokenString = localStorage.getItem("user");
-    const tokenObject = tokenString ? JSON.parse(tokenString) : null;
-    const token = tokenObject?.data?.token;
+  useEffect(() => {
+    dispatch(getBalance());
 
-    const headers = {
-      Authorization: `Bearer ${token}`,
-    };
-
-    try {
-      const response = await axios.get(`${API_URL}/balance`, {
-        headers,
-      });
-      setIsBalance(response.data.data.balance);
-    } catch (error) {
-      console.error("Error fetching banners:", error);
-    }
-  };
+    dispatch(resetBalance());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleShowHideBalance = () => {
     setShowBalance(!isShowBalance);
@@ -75,7 +56,10 @@ const AccountBalance: React.FC = () => {
           <div className="p-8 text-white flex flex-col justify-center gap-4 -my-1">
             <p>Saldo Anda</p>
             <h2 className="text-2xl font-bold">
-              Rp {isShowBalance ? thousandSeparator(isBalance) : "••••••••"}
+              Rp{" "}
+              {isShowBalance
+                ? thousandSeparator(balance.data.balance)
+                : "••••••••"}
             </h2>
             <p
               className="text-xs cursor-pointer w-20"

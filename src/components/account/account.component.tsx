@@ -6,18 +6,6 @@ import { useDispatch } from "react-redux";
 import { logut, reset } from "../../features/auth/authSlice";
 import { AppDispatch } from "../../app/store";
 
-// interface UserData {
-//   status: number;
-//   message: string;
-//   data: null;
-// }
-// interface AuthState {
-//   user: UserData | null;
-//   isError: boolean;
-//   isSuccess: boolean;
-//   isLoading: boolean;
-//   message: string;
-// }
 const Account: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch<AppDispatch>();
@@ -92,9 +80,8 @@ const Account: React.FC = () => {
             </Form.Item>
             <Form.Item className="mb-10">
               <Button
-                type="primary"
                 htmlType="submit"
-                className="w-full text-white bg-red-500"
+                className="w-full text-red-300 border-red-300"
                 onClick={onLogut}
               >
                 Logut

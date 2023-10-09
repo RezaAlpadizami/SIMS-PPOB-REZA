@@ -1,5 +1,8 @@
 import { useState } from "react";
+
 import { Modal, Button, ConfigProvider } from "antd";
+import { useNavigate } from "react-router-dom";
+
 import { CloseCircleFilled } from "@ant-design/icons";
 import { CheckCircleFilled } from "@ant-design/icons";
 import { thousandSeparator } from "../../utils/helper";
@@ -7,11 +10,14 @@ import { thousandSeparator } from "../../utils/helper";
 import Logo from "../../assets/logo/Logo.png";
 
 type ModalConfirmationProps = {
-  buttonName: string;
+  buttonName?: string;
   isNotification?: boolean;
   isFailed?: boolean;
   nominal?: string;
   title?: string;
+  disabled?: boolean;
+  showButtonModal?: boolean;
+  onSubmit?: (() => void) | undefined;
 };
 
 const ModalConfirmation: React.FC<ModalConfirmationProps> = ({
@@ -20,19 +26,31 @@ const ModalConfirmation: React.FC<ModalConfirmationProps> = ({
   isFailed,
   nominal,
   title,
+  disabled,
+  showButtonModal = false,
+  onSubmit,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
 
   const showModal = () => {
     setIsModalOpen(true);
   };
 
-  const handleOk = () => {
+  const handleCancel = () => {
     setIsModalOpen(false);
   };
 
-  const handleCancel = () => {
+  const handleButtonBackToBeranda = () => {
     setIsModalOpen(false);
+    navigate("/");
+  };
+
+  const handleButtonClick = () => {
+    if (onSubmit) {
+      setIsModalOpen(false);
+      onSubmit();
+    }
   };
   return (
     <>
@@ -40,28 +58,23 @@ const ModalConfirmation: React.FC<ModalConfirmationProps> = ({
         theme={{
           token: {
             colorPrimary: "#f04545",
-            colorBgTextActive: "#f04545",
-            colorPrimaryHover: "#fffff",
-            borderRadius: 2,
-          },
-          components: {
-            Modal: {
-              borderRadius: 20,
-            },
+            colorBorder: "none",
           },
         }}
       >
-        <Button
-          onClick={showModal}
-          htmlType="submit"
-          type="primary"
-          className="w-full bg-red-600 rounded-sm h-10"
-        >
-          {buttonName}
-        </Button>
+        {showButtonModal && (
+          <Button
+            onClick={showModal}
+            type="primary"
+            className="w-full bg-red-600 rounded-sm h-10"
+            disabled={disabled}
+          >
+            {buttonName}
+          </Button>
+        )}
         <Modal
           closable
-          open={isModalOpen}
+          open={isFailed ? !isModalOpen : isModalOpen}
           okType="primary"
           style={{ top: 250 }}
           onCancel={handleCancel}
@@ -75,35 +88,29 @@ const ModalConfirmation: React.FC<ModalConfirmationProps> = ({
             <div className="flex flex-col gap-2">
               {isNotification ? (
                 <div className="flex flex-col gap-2">
-                  <button
-                    onClick={handleOk}
-                    className="text-md text-red-500 font-semibold"
+                  <Button
+                    onClick={handleButtonClick}
+                    htmlType="submit"
+                    className="text-md text-red-500 border-none font-semibold"
                   >
-                    Ya, lanjutkan Top Up
-                  </button>
-                  <button
+                    {`Ya, lanjutkan ${
+                      buttonName === "Bayar" ? "Bayar" : "Top Up"
+                    }`}
+                  </Button>
+                  <Button
                     onClick={handleCancel}
-                    className="text-md text-gray-400"
+                    className="text-md text-gray-400 border-none"
                   >
                     Batalkan
-                  </button>
-                </div>
-              ) : isFailed ? (
-                <div>
-                  <button
-                    onClick={handleOk}
-                    className="text-md text-red-500 font-semibold"
-                  >
-                    Kembali ke Beranda
-                  </button>
+                  </Button>
                 </div>
               ) : (
-                <button
-                  onClick={handleOk}
-                  className="text-md text-red-500 font-semibold"
+                <Button
+                  onClick={handleButtonBackToBeranda}
+                  className="text-md text-red-500 border-none font-semibold"
                 >
                   Kembali ke Beranda
-                </button>
+                </Button>
               )}
             </div>
           }

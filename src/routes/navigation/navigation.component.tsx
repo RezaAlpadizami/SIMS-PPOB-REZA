@@ -71,7 +71,7 @@ const Navigation = () => {
                   <Link to="/topup">Top Up</Link>
                 </li>
                 <li className="text-gray-600 hover:text-red-600">
-                  <Link to="/payment">Transaction</Link>
+                  <Link to="/history">Transaction</Link>
                 </li>
                 <li className="text-gray-600 hover:text-red-600">
                   <Link to="/account">Akun</Link>

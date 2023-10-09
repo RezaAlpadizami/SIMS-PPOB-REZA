@@ -4,15 +4,16 @@ type TItem = {
   service_icon: String;
   service_name: String;
   service_tariff: number;
+  service_code: string;
 };
 
 const CategoriesService = (item: TItem) => {
   const navigate = useNavigate();
-  const { service_icon, service_name, service_tariff } = item;
+  const { service_icon, service_name, service_tariff, service_code } = item;
 
   const handleClickService = () => {
     navigate("/payment", {
-      state: { service_icon, service_name, service_tariff },
+      state: { service_icon, service_name, service_tariff, service_code },
     });
   };
   return (
@@ -21,7 +22,7 @@ const CategoriesService = (item: TItem) => {
       onClick={handleClickService}
     >
       <div className="flex flex-col cursor-pointer">
-        <img src={`${service_icon}`} alt="icon" />
+        <img src={`${service_icon}`} alt="icon" className="w-14 h-14" />
         <p className="text-center text-xs">{service_name}</p>
       </div>
     </div>
