@@ -19,18 +19,11 @@ const HistoryTransaction = () => {
   const [historyTransaction, setHistoryTransaction] = useState([]);
   const [filterData, setFilterData] = useState({
     offset: 0,
-    limit: 5,
+    limit: 10,
   });
-  const [showMore, setShowMore] = useState<boolean>(false);
+  const [showMore, setShowMore] = useState<boolean>(true);
 
   const API_URL = "https://take-home-test-api.nutech-integrasi.app";
-
-  const showMessage = (type: "success" | "error", content: string) => {
-    message.open({
-      type,
-      content,
-    });
-  };
 
   const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
@@ -65,7 +58,7 @@ const HistoryTransaction = () => {
         params: { ...filterData },
       })
       .then((res) => {
-        showMessage("success", res.data?.message);
+        setIsLoading(false);
         const dataHistoryTransaction = res.data?.data?.records.map(
           (data: TransactionData) => ({
             ...data,
@@ -73,11 +66,10 @@ const HistoryTransaction = () => {
           })
         );
         setHistoryTransaction(dataHistoryTransaction);
-        setIsLoading(false);
       })
       .catch((error: any) => {
         setIsLoading(false);
-        showMessage("error", error?.response?.data?.message);
+        console.log("error", error);
       });
   };
 
@@ -88,31 +80,32 @@ const HistoryTransaction = () => {
     <div className="container mx-auto px-20">
       {isLoading && <LoadingLottie />}
       <h5 className="text-md font-semibold my-4">Semua Transaksi</h5>
-      <div
-        className={`border border-gray-200 overflow-y-auto shadow ${
-          showMore ? "max-h-[400px]" : "min-h-full"
-        } rounded-[4px] py-2 px-4`}
-      >
-        {historyTransaction.map((data: TransactionData) => (
-          <div className="flex justify-between my-4">
-            <div>
-              <p
-                className={`text-lg ${
-                  data.transaction_type === "PAYMENT"
-                    ? "text-red-500"
-                    : "text-green-300"
-                }  font-semibold`}
-              >
-                {data.transaction_type === "PAYMENT" ? "-" : "+"} Rp
-                {thousandSeparator(data.total_amount)}
-              </p>
-              <p className="text-[10px]">{data.created_on}</p>
+      <div className="border border-gray-200 rounded-[4px] py-2 px-4 shadow">
+        <div className={`${showMore ? "h-[315px] overflow-hidden" : "h-full"}`}>
+          {historyTransaction.map((data: TransactionData) => (
+            <div
+              className="flex justify-between my-4"
+              key={data.invoice_number}
+            >
+              <div>
+                <p
+                  className={`text-lg ${
+                    data.transaction_type === "PAYMENT"
+                      ? "text-red-500"
+                      : "text-green-300"
+                  }  font-semibold`}
+                >
+                  {data.transaction_type === "PAYMENT" ? "-" : "+"} Rp
+                  {thousandSeparator(data.total_amount)}
+                </p>
+                <p className="text-[10px]">{data.created_on}</p>
+              </div>
+              <div className="flex flex-col justify-center align-middle">
+                <p className="text-xs">{data.transaction_type}</p>
+              </div>
             </div>
-            <div className="flex flex-col justify-center align-middle">
-              <p className="text-xs">{data.transaction_type}</p>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
         <p
           className="text-center cursor-pointer text-red-500"
           onClick={handleShowMore}

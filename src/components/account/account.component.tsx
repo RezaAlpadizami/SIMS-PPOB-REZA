@@ -27,9 +27,7 @@ const Account: React.FC = () => {
   const handleEditProfileClick = () => {
     navigate("/edit-profile");
   };
-  const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
-  };
+
   return (
     <>
       <div className="grid place-items-center min-h-[500px]">
@@ -44,16 +42,14 @@ const Account: React.FC = () => {
         </div>
         <div className="my-4">
           <Form
-            name="register-field"
             layout="vertical"
             className="min-w-[685px]"
             initialValues={{
-              email: profile?.data?.email || "",
-              firstname: capitalizedFirstName || "",
-              lastname: capitalizedLastName || "",
+              email: profile?.data?.email,
+              first_name: capitalizedFirstName,
+              last_name: capitalizedLastName,
               remember: true,
             }}
-            onFinish={onFinish}
           >
             <Form.Item
               label="Email"
@@ -72,14 +68,14 @@ const Account: React.FC = () => {
                 disabled
               />
             </Form.Item>
-            <Form.Item name="firstname" label="Nama Depan">
+            <Form.Item label="Nama Depan" name="first_name">
               <Input
                 prefix={<UserOutlined className="text-gray-300 h-10 w-full" />}
                 placeholder="nama depan"
                 disabled
               />
             </Form.Item>
-            <Form.Item name="lastname" label="Nama Belakang">
+            <Form.Item label="Nama Belakang" name="last_name">
               <Input
                 prefix={<UserOutlined className="text-gray-300 h-10 w-full" />}
                 placeholder="nama belakang"
@@ -98,7 +94,6 @@ const Account: React.FC = () => {
             </Form.Item>
             <Form.Item className="mb-10">
               <Button
-                htmlType="submit"
                 className="w-full text-red-300 border-red-300"
                 onClick={onLogut}
               >
