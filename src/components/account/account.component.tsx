@@ -2,13 +2,21 @@ import { Button, Form, Input } from "antd";
 import { UserOutlined, EditFilled } from "@ant-design/icons";
 import ImageUpload from "../image-upload/image-upload.component";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import { logut, reset } from "../../features/auth/authSlice";
-import { AppDispatch } from "../../app/store";
 
 const Account: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
+  const { profile } = useAppSelector((state) => state.profile);
+
+  const firstName = profile?.data?.first_name || "";
+  const lastName = profile?.data?.last_name || "";
+
+  const capitalizedFirstName =
+    firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
+  const capitalizedLastName =
+    lastName.charAt(0).toUpperCase() + lastName.slice(1).toLowerCase();
 
   const onLogut = () => {
     dispatch(logut());
@@ -30,14 +38,21 @@ const Account: React.FC = () => {
             <ImageUpload />
             <EditFilled className="absolute text-gray-600 -bottom-1 right-3 p-1 border rounded-full bg-white" />
           </div>
-          <h2 className="font-semibold text-2xl">Kristanto Wibowo</h2>
+          <h2 className="font-semibold text-2xl">
+            {capitalizedFirstName} {capitalizedLastName}
+          </h2>
         </div>
         <div className="my-4">
           <Form
             name="register-field"
             layout="vertical"
             className="min-w-[685px]"
-            initialValues={{ remember: true }}
+            initialValues={{
+              email: profile?.data?.email || "",
+              firstname: capitalizedFirstName || "",
+              lastname: capitalizedLastName || "",
+              remember: true,
+            }}
             onFinish={onFinish}
           >
             <Form.Item
@@ -54,18 +69,21 @@ const Account: React.FC = () => {
                 prefix={"@"}
                 className="text-gray-300 h-12 "
                 placeholder="masukan email anda"
+                disabled
               />
             </Form.Item>
             <Form.Item name="firstname" label="Nama Depan">
               <Input
                 prefix={<UserOutlined className="text-gray-300 h-10 w-full" />}
                 placeholder="nama depan"
+                disabled
               />
             </Form.Item>
             <Form.Item name="lastname" label="Nama Belakang">
               <Input
                 prefix={<UserOutlined className="text-gray-300 h-10 w-full" />}
                 placeholder="nama belakang"
+                disabled
               />
             </Form.Item>
             <Form.Item className="mt-10">
