@@ -1,10 +1,12 @@
-import FormInput from "../../components/form/form.component";
-import { useNavigate } from "react-router-dom";
-import { login, reset } from "../../features/auth/authSlice";
 import { useEffect } from "react";
+
+import { useNavigate } from "react-router-dom";
+import { message as antdMessage } from "antd";
+
+import FormInput from "../../components/form/form.component";
+import { login, reset } from "../../features/auth/authSlice";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import LoadingLottie from "../../components/spinner-lottie/spinner-lottie.component";
-import { message as antdMessage } from "antd";
 
 const Login = () => {
   const navigate = useNavigate();

@@ -5,10 +5,10 @@ import { Form, Input, message } from "antd";
 import { WalletOutlined } from "@ant-design/icons";
 import { getBalance } from "../../features/balance-account/balanceSlice";
 
-import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import ModalConfirmation from "../modal/modal.component";
-import AmountButton from "../button-amount-topup/button-amount-topup.component";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import LoadingLottie from "../spinner-lottie/spinner-lottie.component";
+import AmountButton from "../button-amount-topup/button-amount-topup.component";
 
 interface ValueState {
   displayValue: string;
@@ -19,16 +19,16 @@ const API_URL = "https://take-home-test-api.nutech-integrasi.app";
 
 const TopUp = () => {
   const [form] = Form.useForm();
+  const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.auth);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isFocused, setIsFocused] = useState<boolean>(false);
   const [valueInput, setValueInput] = useState<ValueState>({
     displayValue: "",
     actualNumberValue: 0,
   });
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isFocused, setIsFocused] = useState<boolean>(false);
   const [showModalSuccess, setShowModalSuccess] = useState<boolean>(false);
   const [showModalFailed, setShowModalFailed] = useState<boolean>(false);
-  const { user } = useAppSelector((state) => state.auth);
-  const dispatch = useAppDispatch();
 
   const handleFocus = () => {
     setIsFocused(true);

@@ -1,27 +1,30 @@
+import { useState } from "react";
+
+import axios from "axios";
 import { Button, Form, Input, message } from "antd";
 import { UserOutlined, EditFilled } from "@ant-design/icons";
+
 import ImageUpload from "../image-upload/image-upload.component";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
-import axios from "axios";
-import { useState } from "react";
-import LoadingLottie from "../spinner-lottie/spinner-lottie.component";
 import { getProfile } from "../../features/profile/profileSlice";
+import LoadingLottie from "../spinner-lottie/spinner-lottie.component";
 
 const API_URL = "https://take-home-test-api.nutech-integrasi.app";
 
 const EditAccount: React.FC = () => {
-  const { profile } = useAppSelector((state) => state.profile);
+  const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const dispatch = useAppDispatch();
+  const { profile } = useAppSelector((state) => state.profile);
 
-  const firstName = profile?.data?.first_name || "";
   const lastName = profile?.data?.last_name || "";
+  const firstName = profile?.data?.first_name || "";
+
+  const capitalizedLastName =
+    lastName.charAt(0).toUpperCase() + lastName.slice(1).toLowerCase();
 
   const capitalizedFirstName =
     firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
-  const capitalizedLastName =
-    lastName.charAt(0).toUpperCase() + lastName.slice(1).toLowerCase();
 
   const showMessage = (type: "success" | "error", content: string) => {
     message.open({

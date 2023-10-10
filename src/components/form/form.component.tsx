@@ -1,6 +1,6 @@
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Form, Input } from "antd";
 import { Link } from "react-router-dom";
+import { Button, Form, Input } from "antd";
+import { LockOutlined, UserOutlined } from "@ant-design/icons";
 
 type FormInputProps = {
   login?: boolean;

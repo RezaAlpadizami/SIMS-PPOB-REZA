@@ -21,7 +21,7 @@ const CategoriesService = (item: TItem) => {
       className="w-full flex justify-around cursor-pointer"
       onClick={handleClickService}
     >
-      <div className="flex flex-col cursor-pointer">
+      <div className="flex flex-col justify-center items-center cursor-pointer">
         <img src={`${service_icon}`} alt="icon" className="w-14 h-14" />
         <p className="text-center text-xs">{service_name}</p>
       </div>

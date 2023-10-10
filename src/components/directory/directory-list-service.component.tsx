@@ -14,7 +14,7 @@ interface DirectoryItemsProps {
 
 const DirectoryListService: React.FC<DirectoryItemsProps> = ({ items }) => {
   return (
-    <div className="flex gap-16 my-8">
+    <div className="container flex gap-16 my-8">
       {items.map((item) => (
         <CategoriesService key={item.service_code} {...item} />
       ))}

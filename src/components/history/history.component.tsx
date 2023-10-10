@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { useAppSelector } from "../../app/hooks";
+
 import axios from "axios";
-import { message } from "antd";
+
+import { useAppSelector } from "../../app/hooks";
 import { thousandSeparator } from "../../utils/helper";
 import LoadingLottie from "../spinner-lottie/spinner-lottie.component";
 
@@ -14,14 +15,14 @@ type TransactionData = {
 };
 
 const HistoryTransaction = () => {
-  const { user } = useAppSelector((state) => state.auth);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [historyTransaction, setHistoryTransaction] = useState([]);
   const [filterData, setFilterData] = useState({
     offset: 0,
     limit: 10,
   });
+  const { user } = useAppSelector((state) => state.auth);
   const [showMore, setShowMore] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [historyTransaction, setHistoryTransaction] = useState([]);
 
   const API_URL = "https://take-home-test-api.nutech-integrasi.app";
 
