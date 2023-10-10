@@ -9,14 +9,14 @@ import {
 } from "../../features/balance-account/balanceSlice";
 
 const AccountBalance: React.FC = () => {
+  const dispatch = useAppDispatch();
   const [isShowBalance, setShowBalance] = useState(false);
 
   const { profile } = useAppSelector((state) => state.profile);
   const { balance } = useAppSelector((state) => state.balance);
-  const dispatch = useAppDispatch();
 
-  const firstName = profile?.data.first_name || "";
-  const lastName = profile?.data.last_name || "";
+  const firstName = profile?.data?.first_name || "";
+  const lastName = profile?.data?.last_name || "";
 
   const capitalizedFirstName =
     firstName.charAt(0).toUpperCase() + firstName.slice(1).toLowerCase();
@@ -26,9 +26,7 @@ const AccountBalance: React.FC = () => {
   useEffect(() => {
     dispatch(getProfile());
 
-    return () => {
-      dispatch(reset());
-    };
+    dispatch(reset());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -58,7 +56,7 @@ const AccountBalance: React.FC = () => {
             <h2 className="text-2xl font-bold">
               Rp{" "}
               {isShowBalance
-                ? thousandSeparator(balance.data.balance)
+                ? thousandSeparator(balance?.data?.balance || 0)
                 : "••••••••"}
             </h2>
             <p

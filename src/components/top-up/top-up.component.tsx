@@ -68,7 +68,7 @@ const TopUp = () => {
 
   const handlePaymentTransaction = () => {
     setIsLoading(true);
-    const token = user?.data.token;
+    const token = user?.token;
     const headers = {
       Authorization: `Bearer ${token}`,
     };

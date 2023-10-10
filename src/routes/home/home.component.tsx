@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import authService from "../../features/auth/authSerive";
 
 import { useAppSelector } from "../../app/hooks";
 import LoadingLottie from "../../components/spinner-lottie/spinner-lottie.component";
@@ -20,7 +19,7 @@ const Home: React.FC = () => {
   const [dataService, setDataService] = useState<any[]>([]);
 
   useEffect(() => {
-    if (!user || authService.isSessionExpired()) {
+    if (!user) {
       navigate("/login");
     }
   }, [user, navigate]);
@@ -34,7 +33,7 @@ const Home: React.FC = () => {
 
   const getAllBanner = async () => {
     setIsLoading(true);
-    const token = user?.data.token;
+    const token = user?.token;
     const headers = {
       Authorization: `Bearer ${token}`,
     };
@@ -52,7 +51,7 @@ const Home: React.FC = () => {
 
   const getAllService = async () => {
     setIsLoading(true);
-    const token = user?.data.token;
+    const token = user?.token;
     const headers = {
       Authorization: `Bearer ${token}`,
     };

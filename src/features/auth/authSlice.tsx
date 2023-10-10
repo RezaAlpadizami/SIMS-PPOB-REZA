@@ -4,11 +4,8 @@ import authService from "./authSerive";
 const user = localStorage.getItem("user");
 
 interface UserData {
-  status: number;
-  message: string;
-  data: {
-    token: string;
-  };
+  email: string;
+  token: string;
 }
 
 interface AuthState {
@@ -96,7 +93,6 @@ export const authSlice = createSlice({
       .addCase(register.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.message = action.payload?.message as string;
       })
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false;
@@ -109,7 +105,6 @@ export const authSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.isLoading = false;
         state.isSuccess = true;
-        state.message = action.payload?.message as string;
         state.user = action.payload;
       })
       .addCase(login.rejected, (state, action) => {

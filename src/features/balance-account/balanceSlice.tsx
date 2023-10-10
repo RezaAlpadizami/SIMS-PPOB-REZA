@@ -24,12 +24,12 @@ const initialState: InitialState = {
 };
 
 export const getBalance = createAsyncThunk(
-  "profile/fetchProfile",
+  "balance/fetchBalance",
   async (_, thunkAPI) => {
     try {
-      const tokenString = sessionStorage.getItem("user");
+      const tokenString = localStorage.getItem("user");
       const tokenObject = tokenString ? JSON.parse(tokenString) : null;
-      const token = tokenObject?.data?.token;
+      const token = tokenObject?.token;
       if (!token) {
         throw new Error("Token not found");
       }
@@ -48,7 +48,7 @@ export const getBalance = createAsyncThunk(
 );
 
 export const balanceSlice = createSlice({
-  name: "profile",
+  name: "balance",
   initialState,
   reducers: {
     reset: (state) => {

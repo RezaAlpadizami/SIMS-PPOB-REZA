@@ -22,39 +22,27 @@ const register = async (userData: IRegisterData) => {
 const login = async (userData: ILoginData) => {
   const response = await axios.post(`${API_URL}/login`, userData);
 
+  console.log("res", response.data.data.token);
+
   if (response.data) {
-    const expirationDate = new Date().getTime() + 12 * 60 * 60 * 1000;
-    sessionStorage.setItem("user", JSON.stringify(response.data));
-    sessionStorage.setItem("userExpiration", expirationDate.toString());
-    // localStorage.setItem("user", JSON.stringify(response.data));
+    const userDataItem = {
+      email: userData.email,
+      token: response.data?.data?.token,
+    };
+    localStorage.setItem("user", JSON.stringify(userDataItem));
   }
 
   return response.data;
 };
 
 const logut = () => {
-  sessionStorage.removeItem("user");
-  sessionStorage.removeItem("userExpiration");
-  // localStorage.removeItem("user");
-};
-
-const isSessionExpired = () => {
-  const userExpiration = sessionStorage.getItem("userExpiration");
-  if (!userExpiration) {
-    return true;
-  }
-
-  const expirationTime = parseInt(userExpiration, 10);
-  const currentTime = new Date().getTime();
-
-  return currentTime > expirationTime;
+  localStorage.removeItem("user");
 };
 
 const authService = {
   register,
   logut,
   login,
-  isSessionExpired,
 };
 
 export default authService;
