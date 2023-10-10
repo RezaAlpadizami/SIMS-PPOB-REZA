@@ -5,15 +5,17 @@ import axios from "axios";
 import { Input, message } from "antd";
 import { WalletOutlined } from "@ant-design/icons";
 
-import { useAppSelector } from "../../app/hooks";
 import { thousandSeparator } from "../../utils/helper";
 import ModalConfirmation from "../modal/modal.component";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import LoadingLottie from "../spinner-lottie/spinner-lottie.component";
+import { getBalance } from "../../features/balance-account/balanceSlice";
 
 const API_URL = "https://take-home-test-api.nutech-integrasi.app";
 
 const Payment: React.FC = () => {
   const location = useLocation();
+  const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -39,7 +41,7 @@ const Payment: React.FC = () => {
 
   const handlePaymentTransaction = () => {
     setIsLoading(true);
-    const token = user?.token;
+    const token = user?.data.token;
     const headers = {
       Authorization: `Bearer ${token}`,
     };
@@ -54,7 +56,8 @@ const Payment: React.FC = () => {
       })
       .then(() => {
         setIsLoading(false);
-        setShowModalSuccess(true);
+        dispatch(getBalance());
+        setShowModalSuccess(!showModalSuccess);
       })
       .catch((error: any) => {
         setIsLoading(false);
@@ -63,6 +66,7 @@ const Payment: React.FC = () => {
       });
   };
 
+  console.log(showModalSuccess);
   return (
     <div className="container mx-auto px-20">
       {isLoading && <LoadingLottie />}
@@ -105,6 +109,7 @@ const Payment: React.FC = () => {
         <ModalConfirmation
           nominal={service_tariff}
           title={`Bayar ${service_name} senilai`}
+          isSuccess
         />
       )}
       {showModalFailed && (

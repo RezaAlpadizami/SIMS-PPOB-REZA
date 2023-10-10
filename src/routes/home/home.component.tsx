@@ -33,7 +33,7 @@ const Home: React.FC = () => {
 
   const getAllBanner = async () => {
     setIsLoading(true);
-    const token = user?.token;
+    const token = user?.data.token;
     const headers = {
       Authorization: `Bearer ${token}`,
     };
@@ -51,7 +51,7 @@ const Home: React.FC = () => {
 
   const getAllService = async () => {
     setIsLoading(true);
-    const token = user?.token;
+    const token = user?.data.token;
     const headers = {
       Authorization: `Bearer ${token}`,
     };

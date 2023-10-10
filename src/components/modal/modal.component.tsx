@@ -13,6 +13,7 @@ type ModalConfirmationProps = {
   buttonName?: string;
   isNotification?: boolean;
   isFailed?: boolean;
+  isSuccess?: boolean;
   nominal?: string;
   title?: string;
   disabled?: boolean;
@@ -24,6 +25,7 @@ const ModalConfirmation: React.FC<ModalConfirmationProps> = ({
   buttonName,
   isNotification,
   isFailed,
+  isSuccess,
   nominal,
   title,
   disabled,
@@ -73,8 +75,7 @@ const ModalConfirmation: React.FC<ModalConfirmationProps> = ({
           </Button>
         )}
         <Modal
-          closable
-          open={isFailed ? !isModalOpen : isModalOpen}
+          open={isFailed || isSuccess ? !isModalOpen : isModalOpen}
           okType="primary"
           style={{ top: 250 }}
           onCancel={handleCancel}

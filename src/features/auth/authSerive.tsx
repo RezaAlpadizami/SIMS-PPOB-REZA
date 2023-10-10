@@ -27,7 +27,9 @@ const login = async (userData: ILoginData) => {
   if (response.data) {
     const userDataItem = {
       email: userData.email,
-      token: response.data?.data?.token,
+      data: {
+        token: response.data?.data?.token,
+      },
     };
     localStorage.setItem("user", JSON.stringify(userDataItem));
   }

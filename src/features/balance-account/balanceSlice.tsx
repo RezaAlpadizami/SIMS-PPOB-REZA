@@ -29,7 +29,7 @@ export const getBalance = createAsyncThunk(
     try {
       const tokenString = localStorage.getItem("user");
       const tokenObject = tokenString ? JSON.parse(tokenString) : null;
-      const token = tokenObject?.token;
+      const token = tokenObject?.data.token;
       if (!token) {
         throw new Error("Token not found");
       }

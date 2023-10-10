@@ -15,15 +15,6 @@ const FormInput: React.FC<FormInputProps> = ({
   account,
   onFinish,
 }) => {
-  // const navigate = useNavigate();
-
-  // const onFinishLogin = (values: any) => {
-  //   console.log(values);
-  //   navigate("/");
-  // };
-  // const onFinishRegister = (values: any) => {
-  //   console.log("Received values of form: ", values);
-  // };
   return (
     <div className="grid grid-cols-2 min-h-[100vh]">
       <div className="w-[50%] flex flex-col justify-center container mx-auto">

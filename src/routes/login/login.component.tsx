@@ -1,31 +1,14 @@
 import FormInput from "../../components/form/form.component";
 import { useNavigate } from "react-router-dom";
 import { login, reset } from "../../features/auth/authSlice";
-import { AppDispatch } from "../../app/store";
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import LoadingLottie from "../../components/spinner-lottie/spinner-lottie.component";
 import { message as antdMessage } from "antd";
 
-interface UserData {
-  status: number;
-  message: string;
-  data: null;
-}
-interface AuthState {
-  user: UserData | null;
-  isError: boolean;
-  isSuccess: boolean;
-  isLoading: boolean;
-  message: string;
-}
-interface RootState {
-  auth: AuthState;
-}
-
 const Login = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useAppDispatch();
 
   const showMessage = (type: "success" | "error", content: string) => {
     antdMessage.open({
@@ -34,8 +17,8 @@ const Login = () => {
     });
   };
 
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
-    (state: RootState) => state.auth
+  const { user, isLoading, isError, isSuccess, message } = useAppSelector(
+    (state) => state.auth
   );
 
   useEffect(() => {
@@ -44,7 +27,7 @@ const Login = () => {
     }
 
     if (isSuccess) {
-      showMessage("success", message);
+      showMessage("success", "Login Sukses");
       navigate("/");
     }
 

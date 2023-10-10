@@ -5,7 +5,9 @@ const user = localStorage.getItem("user");
 
 interface UserData {
   email: string;
-  token: string;
+  data: {
+    token: string;
+  };
 }
 
 interface AuthState {
