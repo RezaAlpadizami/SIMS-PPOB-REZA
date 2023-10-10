@@ -84,13 +84,13 @@ const TopUp = () => {
       .then((res) => {
         setIsLoading(false);
         dispatch(getBalance());
+        setShowModalSuccess(!showModalSuccess);
         showMessage("success", res?.data?.message);
-        setShowModalSuccess(true);
       })
       .catch((error: any) => {
         setIsLoading(false);
         showMessage("error", error?.response?.data?.message);
-        setShowModalFailed(true);
+        setShowModalFailed(!showModalFailed);
       });
   };
 
@@ -192,6 +192,7 @@ const TopUp = () => {
         <ModalConfirmation
           nominal={valueInput.displayValue}
           title={`Top Up sebesar`}
+          isSuccess
         />
       )}
       {showModalFailed && (
