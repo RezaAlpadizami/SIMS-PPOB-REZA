@@ -10,6 +10,7 @@ import HistoryTransaction from "./components/history/history.component";
 import Account from "./components/account/account.component";
 import EditAccount from "./components/edit-account/edit-account.component";
 import { ConfigProvider } from "antd";
+import RedirectToLogin from "./components/redirect-login/redirect-login";
 
 const App = () => {
   return (
@@ -40,6 +41,7 @@ const App = () => {
             </Route>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Register />} />
+            <Route path="*" element={<RedirectToLogin />} />
           </Routes>
         </ConfigProvider>
       </Router>

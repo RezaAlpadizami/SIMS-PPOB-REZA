@@ -17,6 +17,7 @@ type ModalConfirmationProps = {
   nominal?: string;
   title?: string;
   disabled?: boolean;
+  confirmation?: boolean;
   showButtonModal?: boolean;
   onSubmit?: (() => void) | undefined;
 };
@@ -80,6 +81,7 @@ const ModalConfirmation: React.FC<ModalConfirmationProps> = ({
           style={{ top: 250 }}
           onCancel={handleCancel}
           width={300}
+          closable={false}
           bodyStyle={{
             display: "flex",
             flexDirection: "column",

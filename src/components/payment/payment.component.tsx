@@ -11,8 +11,6 @@ import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import LoadingLottie from "../spinner-lottie/spinner-lottie.component";
 import { getBalance } from "../../features/balance-account/balanceSlice";
 
-const API_URL = "https://take-home-test-api.nutech-integrasi.app";
-
 const Payment: React.FC = () => {
   const location = useLocation();
   const dispatch = useAppDispatch();
@@ -51,7 +49,7 @@ const Payment: React.FC = () => {
     };
 
     axios
-      .post(`${API_URL}/transaction`, transactionData, {
+      .post(`${process.env.REACT_APP_API_URL}/transaction`, transactionData, {
         headers,
       })
       .then(() => {

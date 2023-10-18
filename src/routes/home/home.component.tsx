@@ -8,8 +8,6 @@ import LoadingLottie from "../../components/spinner-lottie/spinner-lottie.compon
 import DirectoryListBanner from "../../components/directory/directory-list-banner.component";
 import DirectoryListService from "../../components/directory/directory-list-service.component";
 
-const API_URL = "https://take-home-test-api.nutech-integrasi.app";
-
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const { user } = useAppSelector((state) => state.auth);
@@ -38,9 +36,12 @@ const Home: React.FC = () => {
       Authorization: `Bearer ${token}`,
     };
     try {
-      const response = await axios.get(`${API_URL}/banner`, {
-        headers,
-      });
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/banner`,
+        {
+          headers,
+        }
+      );
       setIsLoading(false);
       setDataBanner(response.data.data);
     } catch (error) {
@@ -56,9 +57,12 @@ const Home: React.FC = () => {
       Authorization: `Bearer ${token}`,
     };
     try {
-      const response = await axios.get(`${API_URL}/services`, {
-        headers,
-      });
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}/services`,
+        {
+          headers,
+        }
+      );
       setIsLoading(false);
       setDataService(response.data.data);
     } catch (error) {

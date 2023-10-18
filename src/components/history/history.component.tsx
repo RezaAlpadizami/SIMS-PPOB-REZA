@@ -24,8 +24,6 @@ const HistoryTransaction = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [historyTransaction, setHistoryTransaction] = useState([]);
 
-  const API_URL = "https://take-home-test-api.nutech-integrasi.app";
-
   const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
     month: "long",
@@ -54,7 +52,7 @@ const HistoryTransaction = () => {
     };
 
     await axios
-      .get(`${API_URL}/transaction/history`, {
+      .get(`${process.env.REACT_APP_API_URL}/transaction/history`, {
         headers,
         params: { ...filterData },
       })

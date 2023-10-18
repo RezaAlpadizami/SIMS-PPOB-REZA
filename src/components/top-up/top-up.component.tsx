@@ -15,8 +15,6 @@ interface ValueState {
   actualNumberValue: number;
 }
 
-const API_URL = "https://take-home-test-api.nutech-integrasi.app";
-
 const TopUp = () => {
   const [form] = Form.useForm();
   const dispatch = useAppDispatch();
@@ -78,7 +76,7 @@ const TopUp = () => {
     };
 
     axios
-      .post(`${API_URL}/topup`, topUpData, {
+      .post(`${process.env.REACT_APP_API_URL}/topup`, topUpData, {
         headers,
       })
       .then((res) => {

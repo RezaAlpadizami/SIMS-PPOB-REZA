@@ -43,7 +43,18 @@ const AccountBalance: React.FC = () => {
   return (
     <div className="flex container mx-auto px-20 my-10 gap-48 justify-between">
       <div className="flex flex-col">
-        <img src={imgProfile} alt="PNG" width={50} />
+        <div className="w-24 h-24 rounded-full bg-red-200 overflow-hidden">
+          <img
+            src={
+              profile?.data.profile_image
+                ? profile?.data.profile_image
+                : imgProfile
+            }
+            alt="PNG"
+            width={50}
+            className="w-full h-62 object-cover"
+          />
+        </div>
         <p className="mt-6 mb-1">Selamat Datang,</p>
         <h1 className="font-bold text-3xl">
           {capitalizedFirstName} {capitalizedLastName}

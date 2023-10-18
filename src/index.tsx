@@ -1,7 +1,9 @@
 import React from "react";
+
 import ReactDOM from "react-dom/client";
 import store from "./app/store";
 import { Provider } from "react-redux";
+// import "dotenv/config";
 
 import "./index.css";
 import App from "./App";
@@ -10,6 +12,8 @@ import reportWebVitals from "./reportWebVitals";
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
+// require("dotenv").config();
 root.render(
   <React.StrictMode>
     <Provider store={store}>

@@ -1,7 +1,5 @@
 import axios from "axios";
 
-const API_URL = "https://take-home-test-api.nutech-integrasi.app";
-
 interface IRegisterData {
   email: string;
   first_name: string;
@@ -14,13 +12,19 @@ interface ILoginData {
 }
 
 const register = async (userData: IRegisterData) => {
-  const response = await axios.post(`${API_URL}/registration`, userData);
+  const response = await axios.post(
+    `${process.env.REACT_APP_API_URL}/registration`,
+    userData
+  );
 
   return response.data;
 };
 
 const login = async (userData: ILoginData) => {
-  const response = await axios.post(`${API_URL}/login`, userData);
+  const response = await axios.post(
+    `${process.env.REACT_APP_API_URL}/login`,
+    userData
+  );
 
   console.log("res", response.data.data.token);
 
@@ -29,6 +33,7 @@ const login = async (userData: ILoginData) => {
       email: userData.email,
       data: {
         token: response.data?.data?.token,
+        timestamp: new Date().getTime(),
       },
     };
     localStorage.setItem("user", JSON.stringify(userDataItem));
@@ -41,10 +46,30 @@ const logut = () => {
   localStorage.removeItem("user");
 };
 
+const isTokenValid = () => {
+  const userData = localStorage.getItem("user");
+  if (userData) {
+    const userDataItem = JSON.parse(userData);
+    const tokenTimestamp = userDataItem.data.timestamp;
+    const currentTime = new Date().getTime();
+    const expirationTime = 12 * 60 * 60 * 1000;
+
+    if (currentTime - tokenTimestamp > expirationTime) {
+      // Token has expired, remove it from localStorage
+      localStorage.removeItem("user");
+      return false;
+    }
+
+    return true;
+  }
+  return false;
+};
+
 const authService = {
   register,
   logut,
   login,
+  isTokenValid,
 };
 
 export default authService;

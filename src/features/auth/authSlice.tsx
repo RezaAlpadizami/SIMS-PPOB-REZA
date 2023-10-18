@@ -76,6 +76,10 @@ export const logut = createAsyncThunk("auth/logut", async () => {
   await authService.logut();
 });
 
+export const isExpired = createAsyncThunk("auth/expired", async () => {
+  await authService.isTokenValid();
+});
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,

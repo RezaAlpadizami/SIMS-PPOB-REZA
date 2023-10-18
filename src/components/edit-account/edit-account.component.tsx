@@ -9,8 +9,6 @@ import { useAppSelector, useAppDispatch } from "../../app/hooks";
 import { getProfile } from "../../features/profile/profileSlice";
 import LoadingLottie from "../spinner-lottie/spinner-lottie.component";
 
-const API_URL = "https://take-home-test-api.nutech-integrasi.app";
-
 const EditAccount: React.FC = () => {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state) => state.auth);
@@ -41,7 +39,7 @@ const EditAccount: React.FC = () => {
     };
 
     await axios
-      .put(`${API_URL}/profile/update`, values, {
+      .put(`${process.env.REACT_APP_API_URL}/profile/update`, values, {
         headers,
       })
       .then((res) => {

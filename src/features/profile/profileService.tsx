@@ -1,14 +1,15 @@
 import axios from "axios";
 
-const API_URL = "https://take-home-test-api.nutech-integrasi.app";
-
 const getProfile = async (token: any) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   };
-  const response = await axios.get(`${API_URL}/profile`, config);
+  const response = await axios.get(
+    `${process.env.REACT_APP_API_URL}/profile`,
+    config
+  );
 
   return response.data;
 };
