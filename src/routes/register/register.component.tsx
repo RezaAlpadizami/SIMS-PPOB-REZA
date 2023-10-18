@@ -44,7 +44,7 @@ const Register = () => {
     }
 
     if (isSuccess) {
-      showMessage("success", message);
+      showMessage("success", "register success");
       navigate("/login");
     }
 

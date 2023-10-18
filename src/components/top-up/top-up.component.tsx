@@ -97,7 +97,7 @@ const TopUp = () => {
       {isLoading && <LoadingLottie />}
       <div className="my-8">
         <p className="mt-6 mb-1">Silahkan masukan</p>
-        <h1 className="font-bold text-3xl">Nominal Top Up</h1>
+        <h1 className="font-semibold text-2xl">Nominal Top Up</h1>
       </div>
       <div className="grid grid-cols-6 gap-3">
         <div className="col-span-4">

@@ -9,7 +9,6 @@ import { message } from "antd";
 const ImageUpload: React.FC = () => {
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
-  const [modalText, setModalText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useAppSelector((state) => state.auth);
   const { profile } = useAppSelector((state) => state.profile);
@@ -34,7 +33,6 @@ const ImageUpload: React.FC = () => {
     const file = e.target.files && e.target.files[0];
     if (file) {
       setSelectedFile(file);
-      setModalText(`Yakin mengganti profile dengan ini ${selectedFile?.name}`);
       showModal();
     }
   };
@@ -103,7 +101,7 @@ const ImageUpload: React.FC = () => {
         confirmLoading={isLoading}
         onCancel={handleCancel}
       >
-        <p>{modalText}</p>
+        <p>{`Yakin mengganti profile dengan ini ${selectedFile?.name}`}</p>
       </Modal>
     </>
   );

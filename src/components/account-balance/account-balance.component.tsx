@@ -71,7 +71,7 @@ const AccountBalance: React.FC = () => {
                 : "••••••••"}
             </h2>
             <p
-              className="text-xs cursor-pointer w-20"
+              className="text-[11px] cursor-pointer w-20"
               onClick={handleShowHideBalance}
             >
               Lihat Saldo

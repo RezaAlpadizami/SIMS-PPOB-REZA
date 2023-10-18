@@ -50,7 +50,6 @@ const EditAccount: React.FC = () => {
       .catch((err) => {
         setIsLoading(false);
         showMessage("error", err?.response?.data?.message);
-        console.log("err", err);
       });
   };
 
