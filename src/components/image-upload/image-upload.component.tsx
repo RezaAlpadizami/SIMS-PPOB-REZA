@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import LogoAccount from "../../assets/img/img-profile.png";
+import imgProfile from "../../assets/img/img-profile.png";
 import { Modal } from "antd";
 import { getProfile } from "../../features/profile/profileSlice";
 import { useAppSelector, useAppDispatch } from "../../app/hooks";
@@ -7,13 +7,28 @@ import axios from "axios";
 import { message } from "antd";
 
 const ImageUpload: React.FC = () => {
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector((state) => state.auth);
-  const { profile } = useAppSelector((state) => state.profile);
   const [open, setOpen] = useState(false);
   const [modalText, setModalText] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const { user } = useAppSelector((state) => state.auth);
+  const { profile } = useAppSelector((state) => state.profile);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  const showModal = () => {
+    setOpen(true);
+  };
+
+  const handleCancel = () => {
+    setOpen(false);
+  };
+
+  const showMessage = (type: "success" | "error", content: string) => {
+    message.open({
+      type,
+      content,
+    });
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
@@ -22,14 +37,6 @@ const ImageUpload: React.FC = () => {
       setModalText(`Yakin mengganti profile dengan ini ${selectedFile?.name}`);
       showModal();
     }
-  };
-
-  const showModal = () => {
-    setOpen(true);
-  };
-
-  const handleCancel = () => {
-    setOpen(false);
   };
 
   const changeProfileImage = async () => {
@@ -58,26 +65,19 @@ const ImageUpload: React.FC = () => {
         console.error("Error:", err);
       }
     }
-
     setOpen(false);
   };
 
-  const showMessage = (type: "success" | "error", content: string) => {
-    message.open({
-      type,
-      content,
-    });
-  };
   return (
     <>
       <div>
         <div className="relative">
-          <div className="rounded-full w-32 h-32 overflow-hidden">
+          <div className="rounded-full w-24 h-24 overflow-hidden">
             <img
               src={
-                profile?.data.profile_image
-                  ? profile.data.profile_image
-                  : LogoAccount
+                profile?.data?.profile_image.includes("null")
+                  ? imgProfile
+                  : profile?.data?.profile_image
               }
               alt="profile.png"
               className="w-full h-62 object-cover"

@@ -43,12 +43,12 @@ const AccountBalance: React.FC = () => {
   return (
     <div className="flex container mx-auto px-20 my-10 gap-48 justify-between">
       <div className="flex flex-col">
-        <div className="w-24 h-24 rounded-full bg-red-200 overflow-hidden">
+        <div className="w-24 h-24 rounded-full overflow-hidden">
           <img
             src={
-              profile?.data.profile_image
-                ? profile?.data.profile_image
-                : imgProfile
+              profile?.data?.profile_image.includes("null")
+                ? imgProfile
+                : profile?.data?.profile_image
             }
             alt="PNG"
             width={50}

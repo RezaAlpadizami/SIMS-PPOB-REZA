@@ -80,37 +80,51 @@ const HistoryTransaction = () => {
       {isLoading && <LoadingLottie />}
       <h5 className="text-md font-semibold my-4">Semua Transaksi</h5>
       <div className="border border-gray-200 rounded-[4px] py-2 px-4 shadow">
-        <div className={`${showMore ? "h-[315px] overflow-hidden" : "h-full"}`}>
-          {historyTransaction.map((data: TransactionData) => (
+        {historyTransaction.length > 0 ? (
+          <div>
             <div
-              className="flex justify-between my-4"
-              key={data.invoice_number}
+              className={`${
+                showMore ? "h-full max-h-[315px] overflow-hidden" : "h-full"
+              }`}
             >
-              <div>
-                <p
-                  className={`text-lg ${
-                    data.transaction_type === "PAYMENT"
-                      ? "text-red-500"
-                      : "text-green-300"
-                  }  font-semibold`}
+              {historyTransaction.map((data: TransactionData) => (
+                <div
+                  className="flex justify-between my-4"
+                  key={data.invoice_number}
                 >
-                  {data.transaction_type === "PAYMENT" ? "-" : "+"} Rp
-                  {thousandSeparator(data.total_amount)}
-                </p>
-                <p className="text-[10px]">{data.created_on}</p>
-              </div>
-              <div className="flex flex-col justify-center align-middle">
-                <p className="text-xs">{data.transaction_type}</p>
-              </div>
+                  <div>
+                    <p
+                      className={`text-lg ${
+                        data.transaction_type === "PAYMENT"
+                          ? "text-red-500"
+                          : "text-green-300"
+                      }  font-semibold`}
+                    >
+                      {data.transaction_type === "PAYMENT" ? "-" : "+"} Rp
+                      {thousandSeparator(data.total_amount)}
+                    </p>
+                    <p className="text-[10px]">{data.created_on}</p>
+                  </div>
+                  <div className="flex flex-col justify-center align-middle">
+                    <p className="text-xs">{data.transaction_type}</p>
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-        <p
-          className="text-center cursor-pointer text-red-500"
-          onClick={handleShowMore}
-        >
-          Show More
-        </p>
+            {historyTransaction.length > 5 && (
+              <p
+                className="text-center cursor-pointer text-red-500"
+                onClick={handleShowMore}
+              >
+                Show More
+              </p>
+            )}
+          </div>
+        ) : (
+          <div className="text-center min-h-[300px] flex place-items-center justify-center">
+            <p className=" font-semibold text-xl">Belum Ada History</p>
+          </div>
+        )}
       </div>
     </div>
   );

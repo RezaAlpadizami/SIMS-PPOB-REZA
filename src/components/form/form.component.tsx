@@ -248,7 +248,7 @@ const FormInput: React.FC<FormInputProps> = ({
                   htmlType="submit"
                   className="w-full bg-red-600 rounded-sm"
                 >
-                  Log in
+                  Register
                 </Button>
               </Form.Item>
               <span className="flex justify-center">
